@@ -9,7 +9,9 @@ Notes:
 
 #================================IMPORTS=======================================
 import arcade
-
+from screens.PregameScreen import PregameScreen
+from screens.TrainingScreen import TrainingScreen
+from characters.test.TestChar import TestChar
 #==============================================================================
 
 #=============================Game Options=====================================
@@ -19,143 +21,95 @@ GAME_OPTIONS = {
 		"width" : 1000,
 		"name" : "CSC745 M.U.G.E.N Game"
 	},
-	
+
 	"game" : {
-		'brightness' : 50
+		'brightness' : 50,
 	}
 }
 #==============================================================================
 
 
 class Game(arcade.Window):
-	"""
-	Description: The main class for the fighting game.
-	"""
+    """
+    Description: The main class for the fighting game.
+    """
 
-	def __init__(self):
-		"""
-		Description: The constructor for the game. Global game setup goes here.
-		"""
-		super().__init__(GAME_OPTIONS['window']['width'], GAME_OPTIONS['window']['height'], GAME_OPTIONS['window']['name'])
-		
-		#game setup
-		arcade.set_background_color(arcade.color.WHITE)
-		self.currentView = 'pregame'
-		self.redraw = False
-		self.path = '<the path>'
-		self.characters = None #sprites for all chars
-		self.players = None #sprites for selected char
-	
-	def setup(self):
-		"""
-		Description:
-		"""
-		#load the character classes into a sprites list (1 for each character)
-		pass
-	
-	#-----------------------------------Screens--------------------------------------
-	
-	def pregameScreen(self):
-		"""
-		Description: This page displays the main game start page and waits till the user presses the "Enter" key.
-		"""
-		
-		#********DELETE THIS***********
-		#i deleted the rest of my base code so that we can load in the actual art assets.
-		#This makes a basic logo like what I was talking about yesterday. I left it in here for posterity.
-		
-		#STEP-01: load the game logo
-		box_width = 500
-		box_height = 60
-		font_size = 30
-		x = (GAME_OPTIONS['window']['width'] // 2) - (box_width//2)
-		y = (GAME_OPTIONS['window']['height'] / 2) - (box_height//2)
-		arcade.draw_lrtb_rectangle_outline(x, x + box_width, y + box_height, y, arcade.color.BLUE, 1)
-		arcade.draw_text(GAME_OPTIONS['window']['name'], x, y + (box_height//4), arcade.color.BLACK, font_size, width=box_width, align="center")
-		#********************************
-		#STEP-02: if user presses the enter key then exit loop.
-		
-	def mainMenuScreen(self):
-		"""
-		Description: This is the main menue screen. It should have the logo on top and a list of buttons for the user to press.
-		"""
-		pass
-	
-	def loadingScreen(self):
-		"""
-		Description:
-		"""
-		pass
-	
-	def gameOptionsScreen(self):
-		"""
-		Description:
-		"""
-		pass
-	
-	def characterSelectScreen(self):
-		"""
-		Description:
-		"""
-		pass
-	
-	def fightingScreen(self):
-		"""
-		Description:
-		"""
-		pass
-	
-	def trainingScreen(self):
-		"""
-		Description:
-		"""
-		pass
-	#------------------------------------------------------------------------------------------------
-	
+    def __init__(self):
+        """
+        Description: The constructor for the game. Global game setup goes here.
+        """
+        super().__init__(GAME_OPTIONS['window']['width'], GAME_OPTIONS['window']['height'], GAME_OPTIONS['window']['name'])
+
+        #game setup
+        arcade.set_background_color(arcade.color.WHITE)
+        self.gameOptions = GAME_OPTIONS
+        self.currentView = None
+        self.redraw = False
+        self.path = '<the path>'
+        self.characters = None #sprites for all chars
+        self.players = None #sprites for selected char
+        self.player1 = None
+
+    def setup(self):
+        """
+        Description: Load in resources
+        """
+        # Create all the screens and set pregame screen to current view
+        self.pregameScreen = PregameScreen()
+        # self.mainMenuScreen = MainMenuScreen()
+        # self.loadingScreen = LoadingScreen()
+        # self.gameOptionsScreen = GameOptionsScreen()
+        # self.characterSelectScreen = CharacterSelectScreen()
+        # self.fightingScreen = FightingScreen()
+        self.trainingScreen = TrainingScreen()
+
+        self.currentView = self.pregameScreen
+
+        #load the character classes into a sprites list (1 for each character)
+        self.players = arcade.SpriteList()
+
+        self.testChar = TestChar()
+        self.players.append(self.testChar)
+
 	#---------------------------------Game Logic--------------------------------------------------
 
-	def update(self, delta_time):
-		"""
-		Description: this function updates the current view.
-		"""
-		pass
+    def update(self, delta_time):
+        """
+        Description: this function updates the current view.
+        """
+        self.currentView.update(arcade, self, delta_time)
 
-	def on_key_press(self, key, key_modifiers):
-		"""
-		Description: This function is called whenever a key is pressed.	http://arcade.academy/arcade.key.html
-		"""
-		pass
+    def on_key_press(self, key, key_modifiers):
+        """
+        Description: This function is called whenever a key is pressed.	http://arcade.academy/arcade.key.html
+        """
+        self.currentView.handleKeyPress(arcade, self, key, key_modifiers)
 
-	def on_key_release(self, key, key_modifiers):
-		"""
-		Description: This function is called whenever the user lets off a previously pressed key.
-		"""
-		pass
-	
-	 def on_mouse_press(self, x, y, button, modifiers):
-	 """
-	 This function is called when the user presses a mouse button.
-	"""
-	pass
-	
-	def on_draw(self):
-		"""
-		Description: The rendering function.
-		"""
-		arcade.start_render()
-		if(self.redraw == False):
-			#first time load the particular screen
-			if(self.currentView == 'pregame'):
-				self.pregameScreen()
-		else:
-			#update the current screen (may delete giving screens their own classes is better)
-			pass
-		
+    def on_key_release(self, key, key_modifiers):
+        """
+        Description: This function is called whenever the user lets off a previously pressed key.
+        """
+        self.currentView.handleKeyRelease(arcade, self, key, key_modifiers)
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        """
+        This function is called when the user presses a mouse button.
+        """
+        self.currentView.handleMousePress(arcade, self, x, y, button, modifiers)
+
+    def on_draw(self):
+        """
+        Description: The rendering function.
+        """
+        arcade.start_render()
+        self.currentView.draw(arcade, self)
+
 
 def main():
-	Game()
-	arcade.run()
+    window = Game()
+    window.setup()
+    arcade.run()
 
 
 if __name__ == "__main__":
-	main()
+    main()
