@@ -5,6 +5,20 @@ class TrainingScreen():
         """ Initialize Screen variables """
         pass
 
+    def setup(self, arcade, game):
+        """
+        Initial setup to prepare the Training Screen
+        """
+        # Setup Stage
+        game.stage = game.trainingFacility
+        game.platforms = game.stage.platform_list
+        # Setup Players
+        game.player1 = game.testChar
+        # Setup Physics
+        game.physics = arcade.PhysicsEnginePlatformer(game.player1, game.platforms, gravity_constant = 0.25)
+        # Set new view state
+        game.currentView = game.trainingScreen
+
     def update(self, arcade, game, delta_time):
         """
         Description: This function is passed the game itself to modify.
