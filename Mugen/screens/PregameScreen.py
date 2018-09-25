@@ -16,7 +16,7 @@ class PregameScreen():
         Description: This function handles key presses.
         """
         if key == arcade.key.ENTER:
-            trainingScreen.setup()
+            game.trainingScreen.setup(arcade, game)
 
     def handleKeyRelease(self, arcade, game, key, key_modifiers):
         """
