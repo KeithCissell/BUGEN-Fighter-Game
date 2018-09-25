@@ -5,16 +5,12 @@ class TrainingScreen():
         """ Initialize Screen variables """
         pass
 
-    def load(self, arcade, game):
-        """
-        Description: This function re-initializes and loads up the screen.
-        """
-        pass
-
     def update(self, arcade, game, delta_time):
         """
         Description: This function is passed the game itself to modify.
         """
+        game.physics.update()
+        game.stage.update(arcade, game)
         game.player1.update(game)
 
     def handleKeyPress(self, arcade, game, key, key_modifiers):
@@ -49,5 +45,5 @@ class TrainingScreen():
         """
         Description: The rendering function.
         """
-        arcade.set_background_color(arcade.color.YELLOW)
-        game.players.draw()
+        game.stage.draw(arcade, game)
+        game.player1.draw()

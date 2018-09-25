@@ -5,8 +5,8 @@ class TestChar(arcade.Sprite):
 
     def __init__(self):
         """ Initialize our character variables """
-        super().__init__("characters/test/img/gandalf.png", 0.5)
-        self.movementSpeed = 5.0
+        super().__init__("characters/test/img/gandalf.png", 0.25)
+        self.movementSpeed = 2.5
 
     def update(self, game):
         """
