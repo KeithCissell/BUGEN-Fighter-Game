@@ -50,10 +50,9 @@ class Game(arcade.Window):
         # Stage Atributes
         self.stages = [] # list of all stage classes
         self.platforms = arcade.SpriteList() # holds stage platforms
-        self.stage = None
+        self.stage = None # selected stage
         # Player Atributes
-        self.characters = arcade.SpriteList() # sprites for all chars
-        self.players = arcade.SpriteList() # sprites for selected char
+        self.characters = arcade.SpriteList() # list of all character classes
         self.player1 = None
         self.player2 = None
         # Game Physics
