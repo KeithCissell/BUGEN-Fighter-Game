@@ -12,6 +12,7 @@ import arcade
 from screens.PregameScreen import PregameScreen
 from screens.TrainingScreen import TrainingScreen
 from characters.test.TestChar import TestChar
+from stages.TrainingFacility.TrainingFacility import TrainingFacility
 #==============================================================================
 
 #=============================Game Options=====================================
@@ -46,14 +47,31 @@ class Game(arcade.Window):
         self.currentView = None
         self.redraw = False
         self.path = '<the path>'
-        self.characters = None #sprites for all chars
-        self.players = None #sprites for selected char
+        # Stage Atributes
+        self.stages = [] # list of all stage classes
+        self.platforms = arcade.SpriteList() # holds stage platforms
+        self.stage = None
+        # Player Atributes
+        self.characters = arcade.SpriteList() # sprites for all chars
+        self.players = arcade.SpriteList() # sprites for selected char
         self.player1 = None
+        self.player2 = None
+        # Game Physics
+        self.physics = None
 
     def setup(self):
         """
         Description: Load in resources
         """
+        # Display a loading screen
+        box_width = 500
+        box_height = 60
+        font_size = 30
+        x = (self.gameOptions['window']['width'] // 2) - (box_width//2)
+        y = (self.gameOptions['window']['height'] / 2) - (box_height//2)
+        arcade.draw_lrtb_rectangle_outline(x, x + box_width, y + box_height, y, arcade.color.BLUE, 1)
+        arcade.draw_text(self.gameOptions['window']['name'], x, y + (box_height//4), arcade.color.BLACK, font_size, width=box_width, align="center")
+
         # Create all the screens and set pregame screen to current view
         self.pregameScreen = PregameScreen()
         # self.mainMenuScreen = MainMenuScreen()
@@ -65,11 +83,13 @@ class Game(arcade.Window):
 
         self.currentView = self.pregameScreen
 
-        #load the character classes into a sprites list (1 for each character)
-        self.players = arcade.SpriteList()
-
+        #load the character classes
         self.testChar = TestChar()
-        self.players.append(self.testChar)
+        self.characters.append(self.testChar)
+
+        # load stages
+        self.trainingFacility = TrainingFacility()
+        self.stages.append(self.trainingFacility)
 
 	#---------------------------------Game Logic--------------------------------------------------
 
