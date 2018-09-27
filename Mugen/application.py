@@ -11,8 +11,8 @@ Notes:
 import arcade
 from screens.PregameScreen import PregameScreen
 from screens.TrainingScreen import TrainingScreen
-from characters.test.TestChar import TestChar
-# Stages
+from characters.p1.test.TestChar import TestChar as TestChar1
+from characters.p2.test.TestChar import TestChar as TestChar2
 from stages.TrainingFacility.TrainingFacility import TrainingFacility
 from stages.Field.Field import Field
 from stages.Guild.Guild import Guild
@@ -53,13 +53,18 @@ class Game(arcade.Window):
         # Stage Atributes
         self.stages = [] # list of all stage classes
         self.platforms = arcade.SpriteList() # holds stage platforms
+        self.playerPlatform1 = arcade.SpriteList()
+        self.playerPlatform2 = arcade.SpriteList()
         self.stage = None # selected stage
         # Player Atributes
         self.characters = arcade.SpriteList() # list of all character classes
         self.player1 = None
         self.player2 = None
         # Game Physics
-        self.physics = None
+        self.physics1 = None
+        self.physics2 = None
+        self.physicsP1 = None
+        self.physicsP2 = None
 
     def setup(self):
         """
@@ -83,9 +88,14 @@ class Game(arcade.Window):
         # self.fightingScreen = FightingScreen()
         self.trainingScreen = TrainingScreen()
 
-        # LOAD CHARACTERS
-        self.testChar = TestChar()
-        self.characters.append(self.testChar)
+        self.currentView = self.pregameScreen
+
+        #load the character classes
+        self.testChar1 = TestChar1()
+        self.testChar2= TestChar2()
+
+        self.characters.append(self.testChar1)
+        self.characters.append(self.testChar2)
 
         # LOAD STAGES
         self.trainingFacility = TrainingFacility()
