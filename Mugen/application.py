@@ -12,7 +12,10 @@ import arcade
 from screens.PregameScreen import PregameScreen
 from screens.TrainingScreen import TrainingScreen
 from characters.test.TestChar import TestChar
+# Stages
 from stages.TrainingFacility.TrainingFacility import TrainingFacility
+from stages.Field.Field import Field
+from stages.Guild.Guild import Guild
 #==============================================================================
 
 #=============================Game Options=====================================
@@ -60,7 +63,7 @@ class Game(arcade.Window):
 
     def setup(self):
         """
-        Description: Load in resources
+        Description: Load in resources and set state to pregame screen
         """
         # Display a loading screen
         box_width = 500
@@ -69,9 +72,9 @@ class Game(arcade.Window):
         x = (self.gameOptions['window']['width'] // 2) - (box_width//2)
         y = (self.gameOptions['window']['height'] / 2) - (box_height//2)
         arcade.draw_lrtb_rectangle_outline(x, x + box_width, y + box_height, y, arcade.color.BLUE, 1)
-        arcade.draw_text(self.gameOptions['window']['name'], x, y + (box_height//4), arcade.color.BLACK, font_size, width=box_width, align="center")
+        arcade.draw_text("LOADING...", x, y + (box_height//4), arcade.color.BLACK, font_size, width=box_width, align="center")
 
-        # Create all the screens and set pregame screen to current view
+        # LOAD GAME SCREENS
         self.pregameScreen = PregameScreen()
         # self.mainMenuScreen = MainMenuScreen()
         # self.loadingScreen = LoadingScreen()
@@ -80,15 +83,20 @@ class Game(arcade.Window):
         # self.fightingScreen = FightingScreen()
         self.trainingScreen = TrainingScreen()
 
-        self.currentView = self.pregameScreen
-
-        #load the character classes
+        # LOAD CHARACTERS
         self.testChar = TestChar()
         self.characters.append(self.testChar)
 
-        # load stages
+        # LOAD STAGES
         self.trainingFacility = TrainingFacility()
         self.stages.append(self.trainingFacility)
+        self.field = Field()
+        self.stages.append(self.field)
+        self.guild = Guild()
+        self.stages.append(self.guild)
+
+        # Set game state to PregameScreen
+        self.currentView = self.pregameScreen
 
 	#---------------------------------Game Logic--------------------------------------------------
 

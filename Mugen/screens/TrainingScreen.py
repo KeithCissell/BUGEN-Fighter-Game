@@ -10,10 +10,12 @@ class TrainingScreen():
         Initial setup to prepare the Training Screen
         """
         # Setup Stage
-        game.stage = game.trainingFacility
+        game.stage = game.guild
         game.platforms = game.stage.platform_list
         # Setup Players
         game.player1 = game.testChar
+        game.player1.center_x = 50
+        game.player1.center_y = 100
         # Setup Physics
         game.physics = arcade.PhysicsEnginePlatformer(game.player1, game.platforms, gravity_constant = 0.25)
         # Set new view state
