@@ -11,11 +11,9 @@ Notes:
 import arcade
 from screens.PregameScreen import PregameScreen
 from screens.TrainingScreen import TrainingScreen
-from characters.p1.test.TestChar import TestChar as TestChar1
-from characters.p2.test.TestChar import TestChar as TestChar2
+#from characters.test.TestChar import TestChar
 from stages.TrainingFacility.TrainingFacility import TrainingFacility
-from stages.Field.Field import Field
-from stages.Guild.Guild import Guild
+from characters.Player import Player
 #==============================================================================
 
 #=============================Game Options=====================================
@@ -53,22 +51,17 @@ class Game(arcade.Window):
         # Stage Atributes
         self.stages = [] # list of all stage classes
         self.platforms = arcade.SpriteList() # holds stage platforms
-        self.playerPlatform1 = arcade.SpriteList()
-        self.playerPlatform2 = arcade.SpriteList()
         self.stage = None # selected stage
-        # Player Atributes
+        # Player Attributes
         self.characters = arcade.SpriteList() # list of all character classes
         self.player1 = None
         self.player2 = None
         # Game Physics
-        self.physics1 = None
-        self.physics2 = None
-        self.physicsP1 = None
-        self.physicsP2 = None
+        self.physics = None
 
     def setup(self):
         """
-        Description: Load in resources and set state to pregame screen
+        Description: Load in resources
         """
         # Display a loading screen
         box_width = 500
@@ -77,9 +70,9 @@ class Game(arcade.Window):
         x = (self.gameOptions['window']['width'] // 2) - (box_width//2)
         y = (self.gameOptions['window']['height'] / 2) - (box_height//2)
         arcade.draw_lrtb_rectangle_outline(x, x + box_width, y + box_height, y, arcade.color.BLUE, 1)
-        arcade.draw_text("LOADING...", x, y + (box_height//4), arcade.color.BLACK, font_size, width=box_width, align="center")
+        arcade.draw_text(self.gameOptions['window']['name'], x, y + (box_height//4), arcade.color.BLACK, font_size, width=box_width, align="center")
 
-        # LOAD GAME SCREENS
+        # Create all the screens and set pregame screen to current view
         self.pregameScreen = PregameScreen()
         # self.mainMenuScreen = MainMenuScreen()
         # self.loadingScreen = LoadingScreen()
@@ -91,22 +84,14 @@ class Game(arcade.Window):
         self.currentView = self.pregameScreen
 
         #load the character classes
-        self.testChar1 = TestChar1()
-        self.testChar2= TestChar2()
+        # self.testChar = TestChar()
+        # self.characters.append(self.testChar)
+        self.player1 = Player("goku")
+        self.characters.append(self.player1)
 
-        self.characters.append(self.testChar1)
-        self.characters.append(self.testChar2)
-
-        # LOAD STAGES
+        # load stages
         self.trainingFacility = TrainingFacility()
         self.stages.append(self.trainingFacility)
-        self.field = Field()
-        self.stages.append(self.field)
-        self.guild = Guild()
-        self.stages.append(self.guild)
-
-        # Set game state to PregameScreen
-        self.currentView = self.pregameScreen
 
 	#---------------------------------Game Logic--------------------------------------------------
 
