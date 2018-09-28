@@ -9,23 +9,27 @@ class TrainingScreen():
         """
         Initial setup to prepare the Training Screen
         """
-        # Setup Stag
-        game.stage = game.trainingFacility
+        # Setup Stage
+        game.stage = game.guild
         game.platforms = game.stage.platform_list
 
-        
+
         # Setup Players
         game.player1 = game.testChar1
+        game.player1.center_x = 50
+        game.player1.center_y = 100
         game.player2 = game.testChar2
-        
-        
-        game.playerPlatform1  =  arcade.SpriteList() 
+        game.player2.center_x = 450
+        game.player2.center_y = 100
+
+
+        game.playerPlatform1  =  arcade.SpriteList()
         game.playerPlatform1.append(game.player2)
-        
-        game.playerPlatform2  =  arcade.SpriteList() 
+
+        game.playerPlatform2  =  arcade.SpriteList()
         game.playerPlatform2.append(game.player1)
-        
-        
+
+
         # Setup Physics
         game.physics1 = arcade.PhysicsEnginePlatformer(game.player1, game.platforms, gravity_constant = 0.25)
         game.physics2 = arcade.PhysicsEnginePlatformer(game.player2, game.platforms, gravity_constant = 0.25)
@@ -42,13 +46,13 @@ class TrainingScreen():
         #game.physics.update()
         game.physics1.update()
         game.physics2.update()
-        
+
         game.stage.update(arcade, game)
         game.player1.update(game)
         game.player2.update(game)
         game.physicsP2.update()
         game.physicsP1.update()
-        
+
 
     def handleKeyPress(self, arcade, game, key, key_modifiers):
         """

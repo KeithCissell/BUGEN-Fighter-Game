@@ -25,6 +25,8 @@ class TrainingFacility():
         """
         Description: This function draws the stage.
         """
+        # Draw Background
         arcade.draw_texture_rectangle(game.gameOptions["window"]["width"] // 2, game.gameOptions["window"]["height"] // 2,
                                       game.gameOptions["window"]["width"], game.gameOptions["window"]["height"], self.background)
-        self.platform_list.draw()
+        # Draw platforms (for debugging)
+        # self.platform_list.draw()
