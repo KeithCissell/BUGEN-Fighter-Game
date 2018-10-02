@@ -6,9 +6,8 @@ Created on Tue Oct  2 08:38:05 2018
 """
 
 import arcade
-from numpy.random import uniform  as random
-
-greedy = 0.7
+import random
+import time
 
 class TrainingScreen():
     """ Class to represent a screen state for the game """
@@ -28,12 +27,12 @@ class TrainingScreen():
         # Setup Players
         game.player1 = p1
         game.player1.reset()
-        game.player1.center_x = game.stage.p1_start_y
+        game.player1.center_x = game.stage.p1_start_x
         game.player1.center_y = game.stage.p1_start_y
         game.player2 = p2
         game.player2.reset()
-        game.player2.center_x = game.stage.p2_start_y
-        game.player2.center_y = game.stage.p2_start_x
+        game.player2.center_x = game.stage.p2_start_x
+        game.player2.center_y = game.stage.p2_start_y
 
         game.playerPlatform1.append(game.player2)
         game.playerPlatform2.append(game.player1)
@@ -42,9 +41,14 @@ class TrainingScreen():
         game.physics1 = arcade.PhysicsEnginePlatformer(game.player1, game.platforms, gravity_constant = 0.5)
         game.physics2 = arcade.PhysicsEnginePlatformer(game.player2, game.platforms, gravity_constant = 0.5)
 
+        # AI Variables
+        self.aiThinkClock = int(round(time.time() * 1000))
+        self.aiThinkDuration = 500 # in millis
+        self.aiGreedy = 0.7
+
         # Game Over Flag
         self.gameOver = False
-        self.winner = ""
+        self.gameOverMsg = ""
 
         # Set new view state
         game.currentView = game.trainingScreen
@@ -87,37 +91,40 @@ class TrainingScreen():
                 if arcade.geometry.check_for_collision(game.player1, bullet):
                     game.player1.takeDamage(bullet.damage)
                     bullet.kill()
+
+            # AI Action Logic
+            if (int(round(time.time() * 1000)) - self.aiThinkClock) > self.aiThinkDuration:
+                x_diff = game.player1.center_x - game.player2.center_x
+                y_diff = game.player1.center_y - game.player2.center_y
+                if x_diff > 0 and random.uniform(0,1) < self.aiGreedy:
+                    game.player2.change_x += game.player2.movementSpeed
+                elif x_diff < 0 and random.uniform(0,1) < self.aiGreedy:
+                    game.player2.change_x -= game.player2.movementSpeed
+                if y_diff > 0 and random.uniform(0,1) < self.aiGreedy:
+                    game.player2.change_y += game.player2.movementSpeed
+                elif y_diff < 0 and random.uniform(0,1) < self.aiGreedy:
+                    game.player2.change_y -= game.player2.movementSpeed
+                self.aiThinkClock = int(round(time.time() * 1000))
+
         # GAME OVER
         # Player 1 Wins
         elif game.player2.health <= 0:
             game.player2.kill()
             self.gameOver = True
-            self.winner = "PLAYER 1"
+            self.gameOverMsg = "YOU WIN!"
 
         # Player 2 Wins
         elif game.player1.health <= 0:
             game.player1.kill()
             self.gameOver = True
-            self.winner = "PLAYER 2"
+            self.gameOverMsg = "GAME OVER"
 
     def handleKeyPress(self, arcade, game, key, key_modifiers):
         """
         Description: This function handles key presses.
         """
-        # AI Action Logic
-        x_diff = game.player1.center_x - game.player2.center_x
-        y_diff = game.player1.center_y - game.player2.center_y
-        if x_diff > 0 and random(0,1) < greedy:
-            game.player2.change_x += game.player2.movementSpeed
-        elif x_diff < 0 and random(0,1) < greedy:
-            game.player2.change_x -= game.player2.movementSpeed
-        if y_diff > 0 and random(0,1) < greedy:
-            game.player2.change_y += game.player2.movementSpeed
-        elif y_diff < 0 and random(0,1) < greedy:
-            game.player2.change_y -= game.player2.movementSpeed
-
-        # Player Action Logic
-        elif key == arcade.key.NUM_8:
+        # Player Actions
+        if key == arcade.key.NUM_8:
             game.player1.changeMoveY(game.player1.movementSpeedY)
         elif key == arcade.key.NUM_4:
             game.player1.changeMoveX(-game.player1.movementSpeedX)
@@ -163,5 +170,5 @@ class TrainingScreen():
         arcade.draw_text(f"Player2 Energy: {game.player2.energy}", 10, 20, arcade.color.BLACK, 14)
         # Game Over Display
         if self.gameOver:
-            arcade.draw_text(text=f"{self.winner} WINS!", start_x=350, start_y=350, color=arcade.color.BLACK, font_size=35, bold=True)
+            arcade.draw_text(text=f"{self.gameOverMsg}", start_x=375, start_y=350, color=arcade.color.BLACK, font_size=35, bold=True)
             arcade.draw_text(text=f"Press ENTER to return to menu", start_x=350, start_y=300, color=arcade.color.BLACK, font_size=20, italic=True)
