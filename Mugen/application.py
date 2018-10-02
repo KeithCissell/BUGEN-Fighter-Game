@@ -93,9 +93,9 @@ class Game(arcade.Window):
 
         # LOAD CHARACTERS
         self.goku = Player("goku")
-        self.goku2 = Player("goku")
+        self.vegeta = Player("vegeta")
         self.characters.append(self.goku)
-        self.characters.append(self.goku2)
+        self.characters.append(self.vegeta)
 
         # LOAD STAGES
         self.field = Field()
