@@ -52,6 +52,7 @@ class Player(arcade.Sprite):
         # Player Attributes
         self.movementSpeedX = 7.5
         self.movementSpeedY = 10
+        self.delayedMovementX = 0
         self.health = 100
         self.energy = 0
         self.energyMax = 100
@@ -102,6 +103,9 @@ class Player(arcade.Sprite):
             self.change_x = 0
         # Regular Movement
         else:
+            self.change_x += self.delayedMovementX
+            self.delayedMovementX = 0
+
             self.center_x += self.change_x
             self.center_y += self.change_y
 
@@ -160,7 +164,8 @@ class Player(arcade.Sprite):
         """
         Description: Change movement in x direction
         """
-        if self.block or self.punch:
+        if self.block or self.punchAnimation:
+            self.delayedMovementX += change
             self.change_x = 0
         else:
             self.change_x += change
