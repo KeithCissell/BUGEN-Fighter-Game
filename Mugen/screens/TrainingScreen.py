@@ -58,7 +58,7 @@ class TrainingScreen():
         Description: This function is passed the game itself to modify.
         """
         # Check if game is still going
-        
+
         if game.player1.health > 0 and game.player2.health > 0:
             # PLAYER DIRECTIONS
             if game.player1.get_position()[0] < game.player2.get_position()[0]:
@@ -67,7 +67,7 @@ class TrainingScreen():
             else:
                 game.player1.direction = "Left"
                 game.player2.direction = "Right"
-            
+
             if (int(round(time.time() * 1000)) - self.aiThinkClock) > self.aiThinkDuration:
                 x_diff = game.player1.center_x - game.player2.center_x
                 y_diff = game.player1.center_y - game.player2.center_y
@@ -121,7 +121,7 @@ class TrainingScreen():
                     bullet.kill()
 
             # AI Action Logic
- 
+
 
         # GAME OVER
         # Player 1 Wins
@@ -153,6 +153,7 @@ class TrainingScreen():
             game.player1.shoot()
         elif key == arcade.key.NUM_5:
             game.player1.block = True
+            game.player1.delayedMovementX = game.player1.change_x
         elif key == arcade.key.ENTER and self.gameOver:
             game.currentView = game.pregameScreen
 

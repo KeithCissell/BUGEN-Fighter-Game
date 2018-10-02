@@ -197,6 +197,7 @@ class Player(arcade.Sprite):
         if (int(round(time.time() * 1000)) - self.punchClock) > self.punchDelay:
             self.punch = True
             self.punchAnimation = True
+            self.delayedMovementX = self.change_x
             self.punchClock = int(round(time.time() * 1000))
 
     def takeDamage(self, damage):
