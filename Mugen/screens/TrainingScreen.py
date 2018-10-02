@@ -1,10 +1,21 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Oct  2 08:38:05 2018
+@author: thy
+"""
+
 import arcade
+from numpy.random import uniform  as random
+
+greedy = 0.7
 
 class TrainingScreen():
     """ Class to represent a screen state for the game """
 
     def __init__(self):
         """ Initialize Screen variables """
+        pass
 
     def setup(self, arcade, game, stage, p1, p2):
         """
@@ -93,7 +104,20 @@ class TrainingScreen():
         """
         Description: This function handles key presses.
         """
-        if key == arcade.key.NUM_8:
+        # AI Action Logic
+        x_diff = game.player1.center_x - game.player2.center_x
+        y_diff = game.player1.center_y - game.player2.center_y
+        if x_diff > 0 and random(0,1) < greedy:
+            game.player2.change_x += game.player2.movementSpeed
+        elif x_diff < 0 and random(0,1) < greedy:
+            game.player2.change_x -= game.player2.movementSpeed
+        if y_diff > 0 and random(0,1) < greedy:
+            game.player2.change_y += game.player2.movementSpeed
+        elif y_diff < 0 and random(0,1) < greedy:
+            game.player2.change_y -= game.player2.movementSpeed
+
+        # Player Action Logic
+        elif key == arcade.key.NUM_8:
             game.player1.changeMoveY(game.player1.movementSpeedY)
         elif key == arcade.key.NUM_4:
             game.player1.changeMoveX(-game.player1.movementSpeedX)
@@ -105,18 +129,6 @@ class TrainingScreen():
             game.player1.shoot()
         elif key == arcade.key.NUM_5:
             game.player1.block = True
-        elif key == arcade.key.W:
-            game.player2.changeMoveY(game.player2.movementSpeedY)
-        elif key == arcade.key.A:
-            game.player2.changeMoveX(-game.player2.movementSpeedX)
-        elif key == arcade.key.D:
-            game.player2.changeMoveX(game.player2.movementSpeedX)
-        elif key == arcade.key.Q:
-            game.player2.punchAction()
-        elif key == arcade.key.E:
-            game.player2.shoot()
-        elif key == arcade.key.S:
-            game.player2.block = True
         elif key == arcade.key.ENTER and self.gameOver:
             game.currentView = game.pregameScreen
 
@@ -130,12 +142,6 @@ class TrainingScreen():
             game.player1.changeMoveX(-game.player1.movementSpeedX)
         elif key == arcade.key.NUM_5:
             game.player1.block = False
-        elif key == arcade.key.A:
-            game.player2.changeMoveX(game.player2.movementSpeedX)
-        elif key == arcade.key.D:
-            game.player2.changeMoveX(-game.player2.movementSpeedX)
-        elif key == arcade.key.S:
-            game.player2.block = False
 
     def handleMousePress(self, arcade, game, x, y, button, modifiers):
         """
