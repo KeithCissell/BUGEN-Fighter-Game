@@ -105,6 +105,7 @@ class TwoPlayerScreen():
             game.player1.shoot()
         elif key == arcade.key.NUM_5:
             game.player1.block = True
+            game.player1.delayedMovementX = game.player1.change_x
         elif key == arcade.key.W:
             game.player2.changeMoveY(game.player2.movementSpeedY)
         elif key == arcade.key.A:
@@ -117,6 +118,7 @@ class TwoPlayerScreen():
             game.player2.shoot()
         elif key == arcade.key.S:
             game.player2.block = True
+            game.player2.delayedMovementX = game.player2.change_x
         elif key == arcade.key.ENTER and self.gameOver:
             game.currentView = game.pregameScreen
 
