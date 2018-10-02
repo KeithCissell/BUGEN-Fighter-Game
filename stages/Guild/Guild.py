@@ -15,6 +15,12 @@ class Guild():
         self.platform_list.append(arcade.sprite.Sprite("stages/Guild/img/platform.jpg", image_width = 420, image_height = 2, center_x = 490, center_y = 335)) # top
         self.platform_list.append(arcade.sprite.Sprite("stages/Guild/img/platform.jpg", image_width = 220, image_height = 2, center_x = 490, center_y = 415)) # top
 
+        # Player Start Positions
+        self.p1_start_x = 900
+        self.p1_start_y = 100
+        self.p2_start_x = 100
+        self.p2_start_y = 100
+
     def update(self, arcade, game):
         """
         Description: This function updates the stage for the game canvas.

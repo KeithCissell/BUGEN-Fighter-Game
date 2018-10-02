@@ -11,6 +11,12 @@ class Field():
         self.platform_list = arcade.SpriteList()
         self.platform_list.append(arcade.sprite.Sprite("stages/Field/img/platform.jpg", image_width = 1000, image_height = 2, center_x = 500, center_y = 15)) # bottom
 
+        # Player Start Positions
+        self.p1_start_x = 900
+        self.p1_start_y = 30
+        self.p2_start_x = 100
+        self.p2_start_y = 30
+
     def update(self, arcade, game):
         """
         Description: This function updates the stage for the game canvas.
