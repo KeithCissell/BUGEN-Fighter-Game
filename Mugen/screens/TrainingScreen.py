@@ -103,9 +103,10 @@ class TrainingScreen():
             arcade.sound.play_sound(self.gun_sound)
             # Create a bullet
             bullet1 = Bullet("images/ball.jpg", 0.1)
-            bullet1.angle = 90
+            bullet1.angle = 135
             # Position the bullet
             bullet1.center_x = game.player2.center_x
+            bullet1.center_y = game.player2.center_y
             bullet1.bottom = game.player2.top
 
             ## Add the bullet to the appropriate lists
@@ -115,9 +116,10 @@ class TrainingScreen():
             arcade.sound.play_sound(self.gun_sound)
             # Create a bullet
             bullet2 = Bullet("images/ball.jpg", 0.1)
-            bullet2.angle = 90
+            bullet2.angle = 135
             # Position the bullet
             bullet2.center_x = game.player1.center_x
+            bullet2.center_y = game.player1.center_y
             bullet2.bottom = game.player2.top
             self.bullet_list.append(bullet2)
 
