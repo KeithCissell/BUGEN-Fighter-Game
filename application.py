@@ -88,14 +88,14 @@ class Game(arcade.Window):
         # self.gameOptionsScreen = GameOptionsScreen()
         # self.characterSelectScreen = CharacterSelectScreen()
         # self.fightingScreen = FightingScreen()
-        self.trainingScreen = TrainingScreen(arcade)
+        self.trainingScreen = TrainingScreen()
 
 
         # LOAD CHARACTERS
         self.goku = Player("goku")
-        self.vegeta = Player("vegeta")
+        self.goku2 = Player("vegeta")
         self.characters.append(self.goku)
-        self.characters.append(self.vegeta)
+        self.characters.append(self.goku2)
 
         # LOAD STAGES
         self.field = Field()
