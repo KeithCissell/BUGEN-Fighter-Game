@@ -108,7 +108,7 @@ class TrainingScreen():
             bullet1.center_x = game.player2.center_x
             bullet1.bottom = game.player2.top
 
-            # Add the bullet to the appropriate lists
+            ## Add the bullet to the appropriate lists
             self.bullet_list.append(bullet1)
         elif key == arcade.key.L:
             # Gunshot sound
