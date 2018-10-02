@@ -12,6 +12,7 @@ import arcade
 # Screens
 from screens.PregameScreen import PregameScreen
 from screens.TrainingScreen import TrainingScreen
+from screens.AIScreen import AIScreen
 # Stages
 from stages.TrainingFacility.TrainingFacility import TrainingFacility
 from stages.Field.Field import Field
@@ -83,6 +84,7 @@ class Game(arcade.Window):
         arcade.draw_text("Loading...", x, y + (box_height//4), arcade.color.BLACK, font_size, width=box_width, align="center")
 
         # LOAD GAME SCREENS
+        self.AIscreen = AIScreen()
         self.pregameScreen = PregameScreen()
         # self.mainMenuScreen = MainMenuScreen()
         # self.loadingScreen = LoadingScreen()
@@ -102,6 +104,7 @@ class Game(arcade.Window):
         self.field = Field()
         self.guild = Guild()
         self.trainingFacility = TrainingFacility()
+        
         self.stages.append(self.field)
         self.stages.append(self.guild)
         self.stages.append(self.trainingFacility)

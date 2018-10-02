@@ -17,6 +17,8 @@ class PregameScreen():
         """
         if key == arcade.key.ENTER:
             game.trainingScreen.setup(arcade, game)
+        elif key == arcade.key.W:
+            game.AIscreen.setup(arcade, game)
 
     def handleKeyRelease(self, arcade, game, key, key_modifiers):
         """
