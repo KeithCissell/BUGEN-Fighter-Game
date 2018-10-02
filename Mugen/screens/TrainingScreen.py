@@ -28,7 +28,7 @@ class TrainingScreen():
         game.physics1 = arcade.PhysicsEnginePlatformer(game.player1, game.platforms, gravity_constant = 0.25)
         game.physics2 = arcade.PhysicsEnginePlatformer(game.player2, game.platforms, gravity_constant = 0.25)
         game.physicsP1 = arcade.PhysicsEnginePlatformer(game.player1, game.playerPlatform1, gravity_constant = 0.0)
-        game.physicsP2 = arcade.PhysicsEnginePlatformer(game.player1, game.playerPlatform2, gravity_constant = 0.0)
+        game.physicsP2 = arcade.PhysicsEnginePlatformer(game.player2, game.playerPlatform2, gravity_constant = 0.0)
 
         # Set new view state
         game.currentView = game.trainingScreen
@@ -37,13 +37,16 @@ class TrainingScreen():
         """
         Description: This function is passed the game itself to modify.
         """
-        game.physics1.update()
-        game.physics2.update()
         game.physicsP1.update()
         game.physicsP2.update()
-        game.stage.update(arcade, game)
-        game.player1.update(game)
         game.player2.update(game)
+        game.player1.update(game)
+        
+
+        game.physics1.update()
+        game.physics2.update()
+        game.stage.update(arcade, game)
+
 
     def handleKeyPress(self, arcade, game, key, key_modifiers):
         """
@@ -68,11 +71,11 @@ class TrainingScreen():
         """
         if key == arcade.key.LEFT:
             game.player1.change_x += game.player1.movementSpeed
-        elif key == arcade.key.RIGHT:
+        if key == arcade.key.RIGHT:
             game.player1.change_x -= game.player1.movementSpeed
-        elif key == arcade.key.A:
+        if key == arcade.key.A:
             game.player2.change_x += game.player2.movementSpeed
-        elif key == arcade.key.D:
+        if key == arcade.key.D:
             game.player2.change_x -= game.player2.movementSpeed
 
     def handleMousePress(self, arcade, game, x, y, button, modifiers):
