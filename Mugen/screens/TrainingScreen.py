@@ -58,6 +58,7 @@ class TrainingScreen():
         Description: This function is passed the game itself to modify.
         """
         # Check if game is still going
+        
         if game.player1.health > 0 and game.player2.health > 0:
             # PLAYER DIRECTIONS
             if game.player1.get_position()[0] < game.player2.get_position()[0]:
@@ -66,6 +67,33 @@ class TrainingScreen():
             else:
                 game.player1.direction = "Left"
                 game.player2.direction = "Right"
+            
+            if (int(round(time.time() * 1000)) - self.aiThinkClock) > self.aiThinkDuration:
+                x_diff = game.player1.center_x - game.player2.center_x
+                y_diff = game.player1.center_y - game.player2.center_y
+                print((x_diff**2 + y_diff**2)**0.5)
+                if (x_diff**2 + y_diff**2)**0.5 < 100 and random.uniform(0,1) < self.aiGreedy:
+                    game.player2.punchAction()
+                    game.player2.block = False
+                elif (x_diff**2 + y_diff**2)**0.5 < 200 and y_diff**2 < 70 and random.uniform(0,1) < self.aiGreedy:
+                    game.player2.shoot()
+                    game.player2.block = False
+                elif x_diff > 0 and random.uniform(0,1) < self.aiGreedy:
+                    game.player2.change_x += game.player2.movementSpeed
+                    game.player2.block = False
+                elif x_diff < 0 and random.uniform(0,1) < self.aiGreedy:
+                    game.player2.change_x -= game.player2.movementSpeed
+                    game.player2.block = False
+                elif y_diff > 0 and random.uniform(0,1) < self.aiGreedy:
+                    game.player2.change_y += game.player2.movementSpeed
+                    game.player2.block = False
+                elif y_diff < 0 and random.uniform(0,1) < self.aiGreedy:
+                    game.player2.change_y -= game.player2.movementSpeed
+                    game.player2.block = False
+
+                else:
+                    game.player2.block = True
+                self.aiThinkClock = int(round(time.time() * 1000))
             # PHYSICS
             game.physics1.update()
             game.physics2.update()
@@ -93,18 +121,7 @@ class TrainingScreen():
                     bullet.kill()
 
             # AI Action Logic
-            if (int(round(time.time() * 1000)) - self.aiThinkClock) > self.aiThinkDuration:
-                x_diff = game.player1.center_x - game.player2.center_x
-                y_diff = game.player1.center_y - game.player2.center_y
-                if x_diff > 0 and random.uniform(0,1) < self.aiGreedy:
-                    game.player2.change_x += game.player2.movementSpeed
-                elif x_diff < 0 and random.uniform(0,1) < self.aiGreedy:
-                    game.player2.change_x -= game.player2.movementSpeed
-                if y_diff > 0 and random.uniform(0,1) < self.aiGreedy:
-                    game.player2.change_y += game.player2.movementSpeed
-                elif y_diff < 0 and random.uniform(0,1) < self.aiGreedy:
-                    game.player2.change_y -= game.player2.movementSpeed
-                self.aiThinkClock = int(round(time.time() * 1000))
+ 
 
         # GAME OVER
         # Player 1 Wins
@@ -138,6 +155,8 @@ class TrainingScreen():
             game.player1.block = True
         elif key == arcade.key.ENTER and self.gameOver:
             game.currentView = game.pregameScreen
+
+
 
     def handleKeyRelease(self, arcade, game, key, key_modifiers):
         """
