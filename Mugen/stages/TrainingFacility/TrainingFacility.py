@@ -13,7 +13,7 @@ class TrainingFacility():
         self.platform_list.append(arcade.sprite.Sprite("stages/TrainingFacility/img/platform.jpg", image_width = 190, image_height = 2, center_x = 265, center_y = 325)) # mid left
         self.platform_list.append(arcade.sprite.Sprite("stages/TrainingFacility/img/platform.jpg", image_width = 185, image_height = 2, center_x = 720, center_y = 325)) # mid right
         self.platform_list.append(arcade.sprite.Sprite("stages/TrainingFacility/img/platform.jpg", image_width = 180, image_height = 2, center_x = 490, center_y = 425)) # top
-        self.platform_list.append(arcade.sprite.Sprite("stages/TrainingFacility/img/platform.jpg", image_width = 1000, image_height = 2, center_x = 500, center_y = 0)) # top
+        self.platform_list.append(arcade.sprite.Sprite("stages/TrainingFacility/img/platform.jpg", image_width = 1000, image_height = 2, center_x = 500, center_y = 0)) # ground
 
     def update(self, arcade, game):
         """
@@ -29,4 +29,4 @@ class TrainingFacility():
         arcade.draw_texture_rectangle(game.gameOptions["window"]["width"] // 2, game.gameOptions["window"]["height"] // 2,
                                       game.gameOptions["window"]["width"], game.gameOptions["window"]["height"], self.background)
         # Draw Platforms (for debugging)
-        self.platform_list.draw()
+        # self.platform_list.draw()

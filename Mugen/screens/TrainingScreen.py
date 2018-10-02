@@ -1,9 +1,10 @@
+import arcade
+
 class TrainingScreen():
     """ Class to represent a screen state for the game """
 
-    def __init__(self):
+    def __init__(self, arcade):
         """ Initialize Screen variables """
-        pass
 
     def setup(self, arcade, game):
         """
@@ -37,13 +38,33 @@ class TrainingScreen():
         """
         Description: This function is passed the game itself to modify.
         """
-        game.physics1.update()
-        game.physics2.update()
-        game.physicsP1.update()
-        game.physicsP2.update()
-        game.stage.update(arcade, game)
-        game.player1.update(game)
-        game.player2.update(game)
+        # Check if game is still going
+        if game.player1.health > 0 and game.player2.health > 0:
+            # PHYSICS
+            game.physics1.update()
+            game.physics2.update()
+            game.physicsP1.update()
+            game.physicsP2.update()
+            game.stage.update(arcade, game)
+            game.player1.update(game)
+            game.player2.update(game)
+
+            # CHECK FOR DAMAGE
+            # Physical
+
+            # Bullet
+            for bullet in game.player1.bullet_list:
+                if arcade.geometry.check_for_collision(game.player2, bullet):
+                    game.player2.takeDamage(bullet.damage)
+                    bullet.kill()
+            for bullet in game.player2.bullet_list:
+                if arcade.geometry.check_for_collision(game.player1, bullet):
+                    game.player1.takeDamage(bullet.damage)
+                    bullet.kill()
+        else:
+            # GAME OVER
+            # TO-DO
+            pass
 
     def handleKeyPress(self, arcade, game, key, key_modifiers):
         """
@@ -55,12 +76,16 @@ class TrainingScreen():
             game.player1.change_x -= game.player1.movementSpeed
         elif key == arcade.key.RIGHT:
             game.player1.change_x += game.player1.movementSpeed
+        elif key == arcade.key.L:
+            game.player1.shoot()
         elif key == arcade.key.W:
             game.player2.change_y += game.player2.movementSpeed
         elif key == arcade.key.A:
             game.player2.change_x -= game.player2.movementSpeed
         elif key == arcade.key.D:
-            game.player2.change_x += game.player2.movementSpeed
+            game.player2.change_x = game.player2.movementSpeed
+        elif key == arcade.key.E:
+            game.player2.shoot()
 
     def handleKeyRelease(self, arcade, game, key, key_modifiers):
         """
@@ -88,3 +113,8 @@ class TrainingScreen():
         game.stage.draw(arcade, game)
         game.player1.draw()
         game.player2.draw()
+        # Render the text
+        arcade.draw_text(f"Player1 Health: {game.player1.health}", 10, 480, arcade.color.BLACK, 14)
+        arcade.draw_text(f"Player1 Energy: {game.player1.energy}", 10, 20, arcade.color.BLACK, 14)
+        arcade.draw_text(f"Player2 Health: {game.player2.health}", 850, 480, arcade.color.BLACK, 14)
+        arcade.draw_text(f"Player2 Energy: {game.player2.energy}", 850, 20, arcade.color.BLACK, 14)
