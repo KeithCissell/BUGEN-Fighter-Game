@@ -3,9 +3,14 @@ import arcade
 class TestChar(arcade.Sprite):
     """ Class to represent a character on the screen """
 
-    def __init__(self, center_x = 0):
+    def __init__(self):
         """ Initialize our character variables """
-        super().__init__("characters/test/img/vegeta.png", scale = 0.25, center_x = center_x)
+        super().__init__()
+
+        self.texture_left = arcade.load_texture("characters/test/img/gandalf.png", scale=0.25)
+        self.texture_right = arcade.load_texture("characters/test/img/gandalf.png", mirrored=True, scale=0.25)
+        self.texture = self.texture_left
+
         self.movementSpeed = 5
 
     def update(self, game):
@@ -14,6 +19,11 @@ class TestChar(arcade.Sprite):
         """
         self.center_x += self.change_x
         self.center_y += self.change_y
+
+        if self.change_x < 0:
+            self.texture = self.texture_left
+        if self.change_x > 0:
+            self.texture = self.texture_right
 
         if self.left < 0:
             self.left = 0
