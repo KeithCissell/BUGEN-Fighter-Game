@@ -6,20 +6,19 @@ Current State of our Game:
 2.	Player selects game mode
   *  Player presses ENTER to go to 2-player game
   *  Player presses TAB to go to training screen (1-Player vs. Thy’s AI)
-3.	In Game Controls
-  *	Player1 always uses the num-pad (make sure num-lock is on)
+3.	Player1 Controls: always uses the num-pad (make sure num-lock is on)
     *	8 – jump
     *	4 – move left
     * 6 – move right
     *	5 – block (you take no damage in this state) HOLD DOWN
     *	7 – punch (meele attack – less damage, landing hit gains energy)
     *	9 – blast move (shoots projectile – more damage, consumes energy)
-  *.  Player2 uses WASD
+4. Player2 Controls: uses WASD
     *	W– jump
     *	A – move left
     *	D – move right
     *	S – block (you take no damage in this state) HOLD DOWN
     *	Q – punch (meele attack – less damage, landing hit gains energy)
     *	E – blast move (shoots projectile – more damage, consumes energy)
-4.	Game plays until someone reaches 0 health and a victor is decided
-5.	Player(s) can then hit enter to return to the pregame screen (back to 1.)
+5.	Game plays until someone reaches 0 health and a victor is decided
+6.	Player(s) can then hit enter to return to the pregame screen (back to 1.)
