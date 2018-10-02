@@ -51,16 +51,12 @@ class TrainingScreen():
         """
         if key == arcade.key.UP:
             game.player1.change_y += game.player1.movementSpeed
-        elif key == arcade.key.DOWN:
-            game.player1.change_y -= game.player1.movementSpeed
         elif key == arcade.key.LEFT:
             game.player1.change_x -= game.player1.movementSpeed
         elif key == arcade.key.RIGHT:
             game.player1.change_x += game.player1.movementSpeed
         elif key == arcade.key.W:
             game.player2.change_y += game.player2.movementSpeed
-        elif key == arcade.key.S:
-            game.player2.change_y -= game.player2.movementSpeed
         elif key == arcade.key.A:
             game.player2.change_x -= game.player2.movementSpeed
         elif key == arcade.key.D:
@@ -70,18 +66,10 @@ class TrainingScreen():
         """
         Description: This function is called whenever the user lets off a previously pressed key.
         """
-        if key == arcade.key.UP:
-            game.player1.change_y -= game.player1.movementSpeed
-        elif key == arcade.key.DOWN:
-            game.player1.change_y += game.player1.movementSpeed
-        elif key == arcade.key.LEFT:
+        if key == arcade.key.LEFT:
             game.player1.change_x += game.player1.movementSpeed
         elif key == arcade.key.RIGHT:
             game.player1.change_x -= game.player1.movementSpeed
-        elif key == arcade.key.W:
-            game.player2.change_y -= game.player2.movementSpeed
-        elif key == arcade.key.S:
-            game.player2.change_y += game.player2.movementSpeed
         elif key == arcade.key.A:
             game.player2.change_x += game.player2.movementSpeed
         elif key == arcade.key.D:
