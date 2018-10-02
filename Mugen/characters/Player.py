@@ -1,10 +1,29 @@
 import arcade
+import time
+
+class Bullet(arcade.Sprite):
+    def __init__(self, bulletSpeed, center_x, center_y):
+        super().__init__("images/ball.jpg", 0.1)
+        self.center_x = center_x
+        self.center_y = center_y
+        self.bulletSpeed = bulletSpeed
+        self.damage = 10
+
+    def update(self):
+        if self.center_x > 1000 or self.center_x < 0:
+            self.kill()
+        else:
+            self.center_x += self.bulletSpeed
+
+    def draw(self):
+        super().draw()
 
 class Player(arcade.Sprite):
     """ Class to represent a character on the screen """
 
     def __init__(self, char):
         """ Initialize our character variables """
+        # Resource Setup
         super().__init__()
         character_path = "characters/" + char + "/img/"
         self.character = None
@@ -20,7 +39,18 @@ class Player(arcade.Sprite):
 
         self.texture = self.stand_left_textures
 
+        # Player Attributes
         self.movementSpeed = 5
+        self.health = 100
+        self.energy = 0
+
+        # Projectile attributes
+        self.gun_sound = arcade.sound.load_sound("sounds/laser1.mp3")
+        self.hit_sound = arcade.sound.load_sound("sounds/phaseJump1.wav")
+        self.bullet_list = arcade.SpriteList()
+        self.bulletSpeed = 5
+        self.shotClock = int(round(time.time() * 1000))
+        self.shotDelay = 1000
 
 
     def update(self, game):
@@ -29,6 +59,7 @@ class Player(arcade.Sprite):
         """
         self.character = arcade.AnimatedWalkingSprite()
         self.all_character_sprites = arcade.SpriteList()
+        self.bullet_list.update()
 
         self.center_x += self.change_x
         self.center_y += self.change_y
@@ -60,6 +91,28 @@ class Player(arcade.Sprite):
         Description: This function draws the character.
         """
         super().draw()
+        self.bullet_list.draw()
+
+    def shoot(self):
+        """
+        Description: Shoots a projectile in direction player is facing.
+        """
+        if len(self.bullet_list) < 5 and (int(round(time.time() * 1000)) - self.shotClock) > self.shotDelay:
+            new_bullet = Bullet(self.bulletSpeed, self.center_x, self.center_y)
+            self.bullet_list.append(new_bullet)
+            self.shotClock = int(round(time.time() * 1000))
+        elif (int(round(time.time() * 1000)) - self.shotClock) > self.shotDelay:
+            self.bullet_list[0].bulletSpeed = self.bulletSpeed
+            self.bullet_list[0].center_x = self.center_x
+            self.bullet_list[0].center_y = self.center_y
+            self.shotClock = int(round(time.time() * 1000))
+        # arcade.sound.play_sound(self.gun_sound)
+
+    def takeDamage(self, damage):
+        """
+        Description: Reduce health by damage and possibly KO player.
+        """
+        self.health -= damage
 
     def move(self, direction):
         """
