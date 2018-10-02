@@ -13,7 +13,13 @@ class TrainingFacility():
         self.platform_list.append(arcade.sprite.Sprite("stages/TrainingFacility/img/platform.jpg", image_width = 190, image_height = 2, center_x = 265, center_y = 325)) # mid left
         self.platform_list.append(arcade.sprite.Sprite("stages/TrainingFacility/img/platform.jpg", image_width = 185, image_height = 2, center_x = 720, center_y = 325)) # mid right
         self.platform_list.append(arcade.sprite.Sprite("stages/TrainingFacility/img/platform.jpg", image_width = 180, image_height = 2, center_x = 490, center_y = 425)) # top
-        self.platform_list.append(arcade.sprite.Sprite("stages/TrainingFacility/img/platform.jpg", image_width = 1000, image_height = 2, center_x = 500, center_y = 0)) # ground
+        self.platform_list.append(arcade.sprite.Sprite("stages/TrainingFacility/img/platform.jpg", image_width = 1000, image_height = 2, center_x = 500, center_y = 0)) # top
+
+        # Player Start Positions
+        self.p1_start_x = 850
+        self.p1_start_y = 250
+        self.p2_start_x = 150
+        self.p2_start_y = 250
 
     def update(self, arcade, game):
         """

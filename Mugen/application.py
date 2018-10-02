@@ -12,6 +12,7 @@ import arcade
 # Screens
 from screens.PregameScreen import PregameScreen
 from screens.TrainingScreen import TrainingScreen
+from screens.TwoPlayerScreen import TwoPlayerScreen
 # Stages
 from stages.TrainingFacility.TrainingFacility import TrainingFacility
 from stages.Field.Field import Field
@@ -65,8 +66,6 @@ class Game(arcade.Window):
         # Game Physics
         self.physics1 = None
         self.physics2 = None
-        self.physicsP1 = None
-        self.physicsP2 = None
 
     def setup(self):
         """
@@ -87,8 +86,8 @@ class Game(arcade.Window):
         # self.loadingScreen = LoadingScreen()
         # self.gameOptionsScreen = GameOptionsScreen()
         # self.characterSelectScreen = CharacterSelectScreen()
-        # self.fightingScreen = FightingScreen()
-        self.trainingScreen = TrainingScreen(arcade)
+        self.twoPlayerScreen = TwoPlayerScreen()
+        self.trainingScreen = TrainingScreen()
 
 
         # LOAD CHARACTERS
