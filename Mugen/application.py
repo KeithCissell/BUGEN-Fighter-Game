@@ -86,7 +86,7 @@ class Game(arcade.Window):
         # self.gameOptionsScreen = GameOptionsScreen()
         # self.characterSelectScreen = CharacterSelectScreen()
         # self.fightingScreen = FightingScreen()
-        self.trainingScreen = TrainingScreen()
+        self.trainingScreen = TrainingScreen(arcade)
 
         self.currentView = self.pregameScreen
 
