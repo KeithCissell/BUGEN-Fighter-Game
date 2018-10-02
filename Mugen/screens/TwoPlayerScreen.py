@@ -3,7 +3,7 @@ import arcade
 class TwoPlayerScreen():
     """ Class to represent a screen state for the game """
 
-    def __init__(self, arcade):
+    def __init__(self):
         """ Initialize Screen variables """
 
     def setup(self, arcade, game, stage, p1, p2):
@@ -17,12 +17,12 @@ class TwoPlayerScreen():
         # Setup Players
         game.player1 = p1
         game.player1.reset()
-        game.player1.center_x = game.stage.p1_start_y
+        game.player1.center_x = game.stage.p1_start_x
         game.player1.center_y = game.stage.p1_start_y
         game.player2 = p2
         game.player2.reset()
-        game.player2.center_x = game.stage.p2_start_y
-        game.player2.center_y = game.stage.p2_start_x
+        game.player2.center_x = game.stage.p2_start_x
+        game.player2.center_y = game.stage.p2_start_y
 
         game.playerPlatform1.append(game.player2)
         game.playerPlatform2.append(game.player1)
@@ -36,7 +36,7 @@ class TwoPlayerScreen():
         self.winner = ""
 
         # Set new view state
-        game.currentView = game.trainingScreen
+        game.currentView = game.twoPlayerScreen
 
     def update(self, arcade, game, delta_time):
         """

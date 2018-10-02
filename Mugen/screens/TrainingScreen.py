@@ -3,26 +3,26 @@ import arcade
 class TrainingScreen():
     """ Class to represent a screen state for the game """
 
-    def __init__(self, arcade):
+    def __init__(self):
         """ Initialize Screen variables """
 
-    def setup(self, arcade, game):
+    def setup(self, arcade, game, stage, p1, p2):
         """
         Initial setup to prepare the Training Screen
         """
         # Setup Stage
-        game.stage = game.guild
+        game.stage = stage
         game.platforms = game.stage.platform_list
 
         # Setup Players
-        game.player1 = game.goku
+        game.player1 = p1
         game.player1.reset()
-        game.player1.center_x = 450 #game.stage.p2_start_y
-        game.player1.center_y = 100 #game.stage.p2_start_y
-        game.player2 = game.vegeta
+        game.player1.center_x = game.stage.p1_start_y
+        game.player1.center_y = game.stage.p1_start_y
+        game.player2 = p2
         game.player2.reset()
-        game.player2.center_x = 50 #game.stage.p1_start_y
-        game.player2.center_y = 100 #game.stage.p1_start_y
+        game.player2.center_x = game.stage.p2_start_y
+        game.player2.center_y = game.stage.p2_start_x
 
         game.playerPlatform1.append(game.player2)
         game.playerPlatform2.append(game.player1)
@@ -30,8 +30,6 @@ class TrainingScreen():
         # Setup Physics
         game.physics1 = arcade.PhysicsEnginePlatformer(game.player1, game.platforms, gravity_constant = 0.5)
         game.physics2 = arcade.PhysicsEnginePlatformer(game.player2, game.platforms, gravity_constant = 0.5)
-        # game.physicsP1 = arcade.PhysicsEnginePlatformer(game.player1, game.playerPlatform1, gravity_constant = 0.0)
-        # game.physicsP2 = arcade.PhysicsEnginePlatformer(game.player2, game.playerPlatform2, gravity_constant = 0.0)
 
         # Game Over Flag
         self.gameOver = False
@@ -56,8 +54,6 @@ class TrainingScreen():
             # PHYSICS
             game.physics1.update()
             game.physics2.update()
-            # game.physicsP1.update()
-            # game.physicsP2.update()
             game.stage.update(arcade, game)
             game.player1.update(game)
             game.player2.update(game)
